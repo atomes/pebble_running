@@ -1,0 +1,26 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "Nikita Pchelin",
+    "longName": "Running Coach",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/main_menu_icon.png",
+                "menuIcon": true,
+                "name": "MENU_ICON",
+                "type": "png"
+            }
+        ]
+    },
+    "shortName": "Coach",
+    "uuid": "4c41704a-c068-4033-abba-32378140089b",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
