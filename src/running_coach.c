@@ -328,10 +328,9 @@ void select_single_click_handler(ClickRecognizerRef recognizer, Window *window) 
 }
 
 void click_config_provider(Window *window) {
-  const uint16_t repeat_interval_ms = 100;
-  window_single_repeating_click_subscribe(BUTTON_ID_UP, repeat_interval_ms, (ClickHandler) up_single_click_handler);
-  window_single_repeating_click_subscribe(BUTTON_ID_DOWN, repeat_interval_ms, (ClickHandler) down_single_click_handler);
-  window_single_repeating_click_subscribe(BUTTON_ID_SELECT, repeat_interval_ms, (ClickHandler) select_single_click_handler);
+  window_single_click_subscribe(BUTTON_ID_UP, (ClickHandler) up_single_click_handler);
+  window_single_click_subscribe(BUTTON_ID_DOWN, (ClickHandler) down_single_click_handler);
+  window_single_click_subscribe(BUTTON_ID_SELECT, (ClickHandler) select_single_click_handler);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
