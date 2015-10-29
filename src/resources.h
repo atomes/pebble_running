@@ -1,6 +1,8 @@
 #define INTERVAL_TYPE_RUN 0
 #define INTERVAL_TYPE_WALK 1
 #define INTERVAL_TYPE_PERIODIC 2
+#define INTERVAL_TYPE_WARMUP 3
+#define INTERVAL_TYPE_COOLDOWN 4
 #define MAX_MENU_ITEMS 17
 #define TIMER_FREQUENCY_MS 1000
 
@@ -8,6 +10,8 @@
 #define MESSAGE_COMPLETED "Done!"
 #define MESSAGE_WALK "Walk"
 #define MESSAGE_RUN "Run"
+#define MESSAGE_WARMUP "Warm"
+#define MESSAGE_COOLDOWN "Cool"
 #define MESSAGE_PERIOD "period %d of %d"
 
 
@@ -73,44 +77,42 @@ struct menu_item Test_menu[] = {
     {
         .title = "Week 1",       .subtitle = "Days 1-3",
         .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 2},
+        .intervals = {            {.type= INTERVAL_TYPE_WARMUP,      .duration = 2},
             {.type = INTERVAL_TYPE_RUN,       .duration = 3},
             {.type = INTERVAL_TYPE_WALK,      .duration = 5}
         }
     }
 };
 
-struct menu_item C25K_menu[] = {
+struct menu_item F25K_menu[] = {
     {
         .title = "Week 1",       .subtitle = "Days 1-3",
-        .intervals_cnt = 18,
+        .intervals_cnt = 17,
         .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+            {.type = INTERVAL_TYPE_WARMUP,    .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 60},
             {.type = INTERVAL_TYPE_WALK,      .duration = 90},
             {.type = INTERVAL_TYPE_RUN,       .duration = 60},
             {.type = INTERVAL_TYPE_WALK,      .duration = 90},
             {.type = INTERVAL_TYPE_RUN,       .duration = 60},
+            {.type = INTERVAL_TYPE_WALK,      .duration = 95},
+            {.type = INTERVAL_TYPE_RUN,       .duration = 65},
+            {.type = INTERVAL_TYPE_WALK,      .duration = 95},
+            {.type = INTERVAL_TYPE_RUN,       .duration = 65},
+            {.type = INTERVAL_TYPE_WALK,      .duration = 90},
+            {.type = INTERVAL_TYPE_RUN,       .duration = 65},
             {.type = INTERVAL_TYPE_WALK,      .duration = 90},
             {.type = INTERVAL_TYPE_RUN,       .duration = 60},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 90},
-            {.type = INTERVAL_TYPE_RUN,       .duration = 60},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 90},
-            {.type = INTERVAL_TYPE_RUN,       .duration = 60},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 90},
-            {.type = INTERVAL_TYPE_RUN,       .duration = 60},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 90},
-            {.type = INTERVAL_TYPE_RUN,       .duration = 60},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 90},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_WALK,      .duration = 95},
+            {.type = INTERVAL_TYPE_RUN,       .duration = 65},
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 180}
         }
     },
     {
         .title = "Week 2",       .subtitle = "Days 1-3",
-        .intervals_cnt = 14,
+        .intervals_cnt = 13,
         .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+            {.type = INTERVAL_TYPE_WARMUP,    .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 90},
             {.type = INTERVAL_TYPE_WALK,      .duration = 120},
             {.type = INTERVAL_TYPE_RUN,       .duration = 90},
@@ -122,31 +124,29 @@ struct menu_item C25K_menu[] = {
             {.type = INTERVAL_TYPE_RUN,       .duration = 90},
             {.type = INTERVAL_TYPE_WALK,      .duration = 120},
             {.type = INTERVAL_TYPE_RUN,       .duration = 90},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 120},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 110}
         }
     },
     {
         .title = "Week 3",       .subtitle = "Days 1-3",
-        .intervals_cnt = 10,
+        .intervals_cnt = 9,
         .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+            {.type = INTERVAL_TYPE_WARMUP,    .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 90},
             {.type = INTERVAL_TYPE_WALK,      .duration = 90},
             {.type = INTERVAL_TYPE_RUN,       .duration = 180},
             {.type = INTERVAL_TYPE_WALK,      .duration = 180},
             {.type = INTERVAL_TYPE_RUN,       .duration = 90},
             {.type = INTERVAL_TYPE_WALK,      .duration = 90},
-            {.type = INTERVAL_TYPE_RUN,       .duration = 180},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 180},             
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_RUN,       .duration = 180},             
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 250}
         }
     },
     {
         .title = "Week 4",       .subtitle = "Days 1-3",
         .intervals_cnt = 9,
         .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+            {.type = INTERVAL_TYPE_WARMUP,    .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 180},
             {.type = INTERVAL_TYPE_WALK,      .duration = 90},
             {.type = INTERVAL_TYPE_RUN,       .duration = 300},
@@ -154,128 +154,119 @@ struct menu_item C25K_menu[] = {
             {.type = INTERVAL_TYPE_RUN,       .duration = 180},
             {.type = INTERVAL_TYPE_WALK,      .duration = 90},
             {.type = INTERVAL_TYPE_RUN,       .duration = 300},            
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 120}
         }
     },  
     {
         .title = "Week 5",       .subtitle = "Day 1",
         .intervals_cnt = 7,
         .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+            {.type = INTERVAL_TYPE_WARMUP,    .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 300},
             {.type = INTERVAL_TYPE_WALK,      .duration = 180},
             {.type = INTERVAL_TYPE_RUN,       .duration = 300},
             {.type = INTERVAL_TYPE_WALK,      .duration = 180},
             {.type = INTERVAL_TYPE_RUN,       .duration = 300},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 250}
         }
     },    
     {
         .title = "Week 5",       .subtitle = "Day 2",
         .intervals_cnt = 5,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+		    {.type= INTERVAL_TYPE_WARMUP,     .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 480},
             {.type = INTERVAL_TYPE_WALK,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 480},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,      .duration = 105}
         }
     },
     {
         .title = "Week 5",       .subtitle = "Day 3",
         .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
-            {.type = INTERVAL_TYPE_RUN,       .duration = 1260},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
+            {.type = INTERVAL_TYPE_RUN,       .duration = 1200},
+            {.type = INTERVAL_TYPE_COOLDOWN,      .duration = 180}
         }
     },
     {
         .title = "Week 6",       .subtitle = "Day 1",
         .intervals_cnt = 7,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,     .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 300},
             {.type = INTERVAL_TYPE_WALK,      .duration = 180},
             {.type = INTERVAL_TYPE_RUN,       .duration = 480},
             {.type = INTERVAL_TYPE_WALK,      .duration = 180},
             {.type = INTERVAL_TYPE_RUN,       .duration = 300},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 240}
         }
     },
     {
         .title = "Week 6",       .subtitle = "Day 2",
         .intervals_cnt = 7,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,     .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 600},
             {.type = INTERVAL_TYPE_WALK,      .duration = 180},
             {.type = INTERVAL_TYPE_RUN,       .duration = 600},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 240}
         }
     },      
     {
         .title = "Week 6",       .subtitle = "Day 3",
         .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,     .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1500},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 210}
         }
     },      
     {
-        .title = "Week 7",       .subtitle = "Days 1-2",
+        .title = "Week 7",       .subtitle = "Days 1-3",
         .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,     .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1500},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 240}
         }
-    },      
+    },            
     {
-        .title = "Week 7",       .subtitle = "Day 3",
+        .title = "Week 8",       .subtitle = "Days 1-3",
         .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,     .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1680},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 270}
         }
-    },      
-    {
-        .title = "Week 8",       .subtitle = "Days 1-2",
-        .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
-            {.type = INTERVAL_TYPE_RUN,       .duration = 1680},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
-    },      
-    {
-        .title = "Week 8",       .subtitle = "Day 3",
-        .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
-            {.type = INTERVAL_TYPE_RUN,       .duration = 1800},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
-    },  
+    },       
     {
         .title = "Week 9",       .subtitle = "Days 1-3",
         .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,     .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1800},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
+            {.type = INTERVAL_TYPE_COOLDOWN,  .duration = 270}
         }
+    },
+    {
+      .title = "Week 10",       .subtitle = "Days 1-3",
+      .intervals_cnt = 3,
+      .intervals = {
+        {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        {.type = INTERVAL_TYPE_RUN,       .duration = 2100},
+        {.type = INTERVAL_TYPE_COOLDOWN,      .duration = 270}
+      }
     }
 };
 
-struct menu_item B210K_menu[] = {
+struct menu_item F210K_menu[] = {
     {
         .title = "Week 1",       .subtitle = "Days 1-3",
         .intervals_cnt = 9,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+		    {.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 600},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 600},
@@ -283,89 +274,89 @@ struct menu_item B210K_menu[] = {
             {.type = INTERVAL_TYPE_RUN,       .duration = 600},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 600},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
+            {.type = INTERVAL_TYPE_COOLDOWN,       .duration=300} 
+		}        
     },
     {
         .title = "Week 2",       .subtitle = "Days 1-3",
         .intervals_cnt = 7,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 900},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 900},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 900},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
+            {.type = INTERVAL_TYPE_COOLDOWN,       .duration=300} 
+		}        
     },  
     {
         .title = "Week 3",       .subtitle = "Days 1-3",
         .intervals_cnt = 7,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1020},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1020},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1020},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
+            {.type = INTERVAL_TYPE_COOLDOWN,       .duration=300} 
+		}        
     },  
     {
         .title = "Week 4",       .subtitle = "Days 1-3",
         .intervals_cnt = 7,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1080},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1080},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1080},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
+            {.type = INTERVAL_TYPE_COOLDOWN,       .duration=300} 
+		}        
     },
     {
         .title = "Week 5",       .subtitle = "Day 1",
         .intervals_cnt = 5,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1320},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1320},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
+            {.type = INTERVAL_TYPE_COOLDOWN,       .duration=300} 
+		}        
     },      
     {
         .title = "Week 5",       .subtitle = "Day 2",
         .intervals_cnt = 5,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1500},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1500},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
+            {.type = INTERVAL_TYPE_COOLDOWN,       .duration=300} 
+		}        
     },      
     {
         .title = "Week 5",       .subtitle = "Day 3",
         .intervals_cnt = 5,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1800},
             {.type = INTERVAL_TYPE_WALK,      .duration = 60},
             {.type = INTERVAL_TYPE_RUN,       .duration = 1800},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
+            {.type = INTERVAL_TYPE_COOLDOWN,       .duration=300} 
+		}        
     },      
     {
         .title = "Week 6",       .subtitle = "Day 1-3",
         .intervals_cnt = 3,
-        .intervals = {
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300},
+        .intervals = {            
+			{.type= INTERVAL_TYPE_WARMUP,      .duration = 300},
             {.type = INTERVAL_TYPE_RUN,       .duration = 3600},
-            {.type = INTERVAL_TYPE_WALK,      .duration = 300}
-        }
+            {.type = INTERVAL_TYPE_COOLDOWN,       .duration=300} 
+		}        
     }
 };
 
@@ -493,7 +484,8 @@ struct menu_item interval_menu[] = {
 
 struct menu_item main_menu[] = {
     //{.title = "Test",       .subtitle = "Test menu",            .program_menu = Test_menu,      .program_menu_size = 1},
-    {.title = "C25K",       .subtitle = "Coach to 5K",          .program_menu = C25K_menu,      .program_menu_size = 15},
-    {.title = "B210K",      .subtitle = "Bridge to 10K",        .program_menu = B210K_menu,     .program_menu_size = 8},
+    {.title = "F25K",       .subtitle = "First day to 5K",      .program_menu = F25K_menu,      .program_menu_size = 15},
+//     {.title = "G28k",       .subtitle = "Gateway to 8k",        .program_menu = G28K_menu,     .program_menu_size = 8},
+    {.title = "F210K",      .subtitle = "Freeway to 10K",       .program_menu = F210K_menu,     .program_menu_size = 8},
     {.title = "Intervals",  .subtitle = "Periodic Vibration",   .program_menu = interval_menu,  .program_menu_size = 17}
 };

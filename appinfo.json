@@ -3,8 +3,8 @@
     "capabilities": [
         ""
     ],
-    "companyName": "Nikita Pchelin",
-    "longName": "Running Coach",
+    "companyName": "Alex Tomes",
+    "longName": "Podrunner Intervals",
     "projectType": "native",
     "resources": {
         "media": [
@@ -16,10 +16,11 @@
             }
         ]
     },
-    "shortName": "Coach",
-    "uuid": "4c41704a-c068-4033-abba-32378140089b",
+    "sdkVersion": "2",
+    "shortName": "Podrunner",
+    "uuid": "47a305d0-ed4e-42d4-bc3c-238e005515a8",
     "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": false
     }

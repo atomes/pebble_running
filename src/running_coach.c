@@ -247,6 +247,10 @@ static void draw_timer(){
     text_layer_set_text(tw_tl_type, MESSAGE_RUN); 
   } else if (control_block_get_interval_type() == INTERVAL_TYPE_WALK) {
     text_layer_set_text(tw_tl_type, MESSAGE_WALK); 
+  } else if (control_block_get_interval_type() == INTERVAL_TYPE_WARMUP) {
+    text_layer_set_text(tw_tl_type, MESSAGE_WARMUP);
+  } else if (control_block_get_interval_type() == INTERVAL_TYPE_COOLDOWN) {
+    text_layer_set_text(tw_tl_type, MESSAGE_COOLDOWN);
   } else {
     text_layer_set_text(tw_tl_type, control_block_get_program_title()); 
   }
